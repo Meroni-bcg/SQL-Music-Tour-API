@@ -2,18 +2,19 @@
 
 const { DataTypes } = require("sequelize");
 
+/* define changes in up */
 module.exports = {
-  async up (queryInterface, Sequelize) {
+  async up(queryInterface, Sequelize) {
     await queryInterface.addColumn(
       'band',
       'recommendation',
-      {type: DataTypes.STRING}
+      { type: DataTypes.STRING }
     )
   },
 
-  async down (queryInterface, Sequelize) {
-    /* Add reverting commands here.*/
-    await queryInterface.removeColumn( 
+  /* Add reverting commands here. Like undo*/
+  async down(queryInterface, Sequelize) {
+    await queryInterface.removeColumn(
       'band',
       'recommendation',
     );
