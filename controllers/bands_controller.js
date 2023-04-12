@@ -6,7 +6,9 @@ const { Band } = db
 // INDEX
 bands.get('/', async (req, res) => {
     try {
-        const foundBands = await Band.findAll()
+        const foundBands = await Band.findAll({
+            order: [[ 'end_time', "ASC" ]]
+        })
         res.status(200).json(foundBands)
     } catch (err) {
         console.log(err)
@@ -31,7 +33,7 @@ bands.get('/:id', async (req, res) => {
 bands.post('/', async (req, res) => {
     try {
         const newBand = await Band.create(req.body)
-        res.status(201).json({ message: 'Band created', newBand })
+        res.status(201).json({ message: 'Band created', data: newBand })
     } catch (err) {
         console.log(err)
         res.status(500).json({ message: 'Server error' })
@@ -63,9 +65,6 @@ bands.delete('/:id', async (req, res) => {
         res.status(500).json({ message: 'Server error' })
     }
 })
-
-
-
 
 // EXPORT
 module.exports = bands
