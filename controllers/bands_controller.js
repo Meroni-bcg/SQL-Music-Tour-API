@@ -3,6 +3,7 @@ const bands = require('express').Router()
 const db = require('../models')
 const { Band } = db
 
+// INDEX
 bands.get('/', async (req, res) => {
     try {
         const foundBands = await Band.findAll()
@@ -13,6 +14,7 @@ bands.get('/', async (req, res) => {
     }
 })
 
+// SHOW
 bands.get('/:id', async (req, res) => {
     try {
         const foundBand = await Band.findOne({
@@ -24,6 +26,18 @@ bands.get('/:id', async (req, res) => {
         res.status(500).json({ message: 'Server error' })
     }
 })
+
+// CREATE
+bands.post('/', async (req, res) => {
+    try {
+        const newBand = await Band.create(req.body)
+        res.status(201).json({ message: 'Band created', newBand })
+    } catch (err) {
+        console.log(err)
+        res.status(500).json({ message: 'Server error' })
+    }
+})
+
 
 // EXPORT
 module.exports = bands
