@@ -38,6 +38,34 @@ bands.post('/', async (req, res) => {
     }
 })
 
+// UPDATE
+bands.put('/:id', async (req, res) => {
+    try {
+        const updatedBands = await Band.update(req.body, {
+            where: { band_id: req.params.id }
+        })
+        res.status(202).json({ message: `${updatedBands} band(s) updated` })
+    } catch (err) {
+        console.log(err)
+        res.status(500).json({ message: 'Server error' })
+    }
+})
+
+// DELETE
+bands.delete('/:id', async (req, res) => {
+    try {
+        const deletedBands = await Band.destroy({
+            where: { band_id: req.params.id }
+        })
+        res.status(200).json({ message: `${deletedBands} band(s) deleted` })
+    } catch (err) {
+        console.log(err)
+        res.status(500).json({ message: 'Server error' })
+    }
+})
+
+
+
 
 // EXPORT
 module.exports = bands
